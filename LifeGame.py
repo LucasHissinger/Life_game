@@ -1,7 +1,9 @@
-import pygame, time
+import pygame, time, sys
 
 size = 50
 grille = [[0 for i in range(size)] for j in range(size)]
+
+# change this to modify the grid
 grille[9][0] = 1
 
 grille[10][1] = 1
@@ -55,20 +57,6 @@ def around(grille, list_i, list_j):
       nb += 1
   return nb
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 pygame.init()
 
 S_size = width, height = 1000, 800
@@ -79,13 +67,19 @@ running = True
 while running:
 
   screen.fill((255, 255, 255))
+  for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
   for i in range(size):
     for j in range(size):
       if grille[i][j] == 0:
-        pygame.draw.rect(screen, (0, 0, 0), (50+int(600/size)*j, 50+int(600/size)*i, int(600/size)-1, int(600/size)-1))
+          pygame.draw.rect(screen, (255, 255, 255), (50+int(600/size)*j, 50+int(600/size)*i, int(600/size)-1, int(600/size)-1))
+          pygame.draw.rect(screen, (0, 0, 0), (50+int(600/size)*j, 50+int(600/size)*i, int(600/size)-1, int(600/size)-1), 1)  # Ajout de la bordure noire
       elif grille[i][j] == 1:
-        pygame.draw.rect(screen, (30, 220, 130), (50+int(600/size)*j, 50+int(600/size)*i, int(600/size)-1, int(600/size)-1))
+          pygame.draw.rect(screen, (30, 220, 130), (50+int(600/size)*j, 50+int(600/size)*i, int(600/size)-1, int(600/size)-1))
+          pygame.draw.rect(screen, (0, 0, 0), (50+int(600/size)*j, 50+int(600/size)*i, int(600/size)-1, int(600/size)-1), 1)  # Ajout de la bordure noire
 
   time.sleep(0.1)
   grille = life(grille, size)
